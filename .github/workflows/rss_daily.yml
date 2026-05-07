@@ -1,0 +1,53 @@
+name: RSS Daily Collector
+
+on:
+  schedule:
+    - cron: '0 22 * * *'  # 毎日 07:00 JST (22:00 UTC)
+  workflow_dispatch:       # GitHub 画面から手動実行も可能
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # seen_articles.json をリポジトリにコミットするために必要
+
+    steps:
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v4
+
+      - name: Python をセットアップ
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: 依存パッケージをインストール
+        run: pip install -r requirements.txt
+
+      - name: config.py を Secrets から生成
+        run: |
+          {
+            echo "import os"
+            echo "from keywords import INTEREST_KEYWORDS"
+            echo ""
+            echo "EMAIL_ADDRESS     = os.environ.get('EMAIL_ADDRESS')"
+            echo "EMAIL_PASSWORD    = os.environ.get('EMAIL_PASSWORD')"
+            echo "EMAIL_TO          = os.environ.get('EMAIL_TO')"
+            echo "ANTHROPIC_API_KEY = os.environ.get('ANTHROPIC_API_KEY')"
+          } > config.py
+
+      - name: RSS を収集してメール送信
+        run: python fetch_rss.py
+        env:
+          EMAIL_ADDRESS: ${{ secrets.EMAIL_ADDRESS }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+      - name: 既読リスト (seen_articles.json) を保存
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add seen_articles.json
+          git diff --staged --quiet || git commit -m "chore: update seen_articles [skip ci]"
+          git push

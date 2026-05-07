@@ -1,0 +1,14 @@
+# 機密情報（GitHubにアップしない）
+config.py
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# ローカル専用
+feedback.json
+run.bat
+setup_password.py
+test_smtp.py
+feedback_server.py
