@@ -13,6 +13,10 @@ from email.mime.text import MIMEText
 from datetime import datetime, timedelta
 from pathlib import Path
 from config import EMAIL_ADDRESS, EMAIL_PASSWORD, EMAIL_TO, ANTHROPIC_API_KEY, INTEREST_KEYWORDS
+try:
+    from config import FEEDBACK_URL
+except ImportError:
+    FEEDBACK_URL = ""
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
@@ -346,10 +350,10 @@ def fetch_feed(feed, days=30, max_per_feed=5):
 # HTML メール生成
 # ---------------------------------------------------------------
 def _feedback_html(article_id, title):
-    if not article_id:
+    if not article_id or not FEEDBACK_URL:
         return ""
     t = urllib.parse.quote(title[:80])
-    base = f"http://localhost:8765/feedback?id={article_id}&t={t}&r="
+    base = f"{FEEDBACK_URL}?id={article_id}&t={t}&r="
     btn  = (
         "background:none;border:1px solid {c};border-radius:4px;"
         "color:{c};font-size:11px;padding:2px 7px;cursor:pointer;"

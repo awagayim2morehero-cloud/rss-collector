@@ -34,6 +34,7 @@ jobs:
             echo "EMAIL_PASSWORD    = os.environ.get('EMAIL_PASSWORD')"
             echo "EMAIL_TO          = os.environ.get('EMAIL_TO')"
             echo "ANTHROPIC_API_KEY = os.environ.get('ANTHROPIC_API_KEY')"
+            echo "FEEDBACK_URL      = os.environ.get('FEEDBACK_URL', '')"
           } > config.py
 
       - name: Run RSS collector
@@ -43,6 +44,7 @@ jobs:
           EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
           EMAIL_TO: ${{ secrets.EMAIL_TO }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          FEEDBACK_URL: ${{ secrets.FEEDBACK_URL }}
 
       - name: Save seen_articles.json
         run: |
