@@ -2,29 +2,29 @@ name: RSS Daily Collector
 
 on:
   schedule:
-    - cron: '0 22 * * *'  # 毎日 07:00 JST (22:00 UTC)
-  workflow_dispatch:       # GitHub 画面から手動実行も可能
+    - cron: '0 22 * * *'
+  workflow_dispatch:
 
 jobs:
   collect:
     runs-on: ubuntu-latest
     permissions:
-      contents: write  # seen_articles.json をリポジトリにコミットするために必要
+      contents: write
 
     steps:
-      - name: リポジトリをチェックアウト
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Python をセットアップ
+      - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
           cache: 'pip'
 
-      - name: 依存パッケージをインストール
+      - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: config.py を Secrets から生成
+      - name: Generate config.py from Secrets
         run: |
           {
             echo "import os"
@@ -36,7 +36,7 @@ jobs:
             echo "ANTHROPIC_API_KEY = os.environ.get('ANTHROPIC_API_KEY')"
           } > config.py
 
-      - name: RSS を収集してメール送信
+      - name: Run RSS collector
         run: python fetch_rss.py
         env:
           EMAIL_ADDRESS: ${{ secrets.EMAIL_ADDRESS }}
@@ -44,7 +44,7 @@ jobs:
           EMAIL_TO: ${{ secrets.EMAIL_TO }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
 
-      - name: 既読リスト (seen_articles.json) を保存
+      - name: Save seen_articles.json
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
