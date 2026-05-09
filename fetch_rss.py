@@ -218,7 +218,7 @@ def matches_interest(entry):
 def load_seen():
     if not SEEN_FILE.exists():
         return {}
-    with open(SEEN_FILE, encoding="utf-8") as f:
+    with open(SEEN_FILE, encoding="utf-8-sig") as f:
         return json.load(f)
 
 def save_seen(seen: dict):
