@@ -4,6 +4,12 @@ on:
   schedule:
     - cron: '0 22 * * *'
   workflow_dispatch:
+    inputs:
+      force_monday:
+        description: '研究会フィードを強制取得（月曜以外に手動実行する場合はtrue）'
+        required: false
+        default: 'false'
+        type: string
 
 jobs:
   collect:
@@ -45,6 +51,7 @@ jobs:
           EMAIL_TO: ${{ secrets.EMAIL_TO }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           FEEDBACK_URL: ${{ secrets.FEEDBACK_URL }}
+          FORCE_MONDAY: ${{ inputs.force_monday || 'false' }}
 
       - name: Save cache files
         run: |

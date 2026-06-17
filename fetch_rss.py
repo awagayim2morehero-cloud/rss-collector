@@ -890,7 +890,8 @@ def main():
 
     seen = load_seen()
     delivered_cache = load_delivered_cache()
-    is_monday = datetime.now().weekday() == 0  # 0 = Monday
+    import os
+    is_monday = datetime.now().weekday() == 0 or os.environ.get('FORCE_MONDAY', '').lower() == 'true'
 
     for feed in FEEDS:
         # 研究会フィードは月曜日のみ取得
