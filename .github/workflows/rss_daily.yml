@@ -46,10 +46,10 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           FEEDBACK_URL: ${{ secrets.FEEDBACK_URL }}
 
-      - name: Save seen_articles.json
+      - name: Save cache files
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add seen_articles.json
-          git diff --staged --quiet || git commit -m "chore: update seen_articles [skip ci]"
+          git add seen_articles.json delivered_articles_cache.json
+          git diff --staged --quiet || git commit -m "chore: update cache files [skip ci]"
           git push

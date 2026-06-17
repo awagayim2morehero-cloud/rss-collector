@@ -34,4 +34,23 @@ INTEREST_KEYWORDS = [
 
     # --- オーディオ（趣味）
     "ネットワーク", "音質", "LINN",
+
+    # --- 近未来監査プロフェッション研究会（①〜⑤）
+    "audit", "auditor", "監査", "監査法人", "監査人",
+    "IAASB", "PCAOB", "IIA",
+    "assurance", "保証業務",
+    "職業的懐疑心", "professional skepticism",
+    "監査品質", "audit quality",
+    "内部統制", "internal control",
+    "自動化バイアス", "automation bias",
+    "continuous auditing", "Continuous Audit",
+
+    # --- 近未来監査プロフェッション研究会（⓪ 俯瞰的考察）
+    "knowledge work", "知識労働",
+    "future of work", "労働の未来",
+    "future of professions", "プロフェッションの未来",
+    "cognitive", "認知的労働",
+    "epistemic",
+    "disruptive", "破壊的変化",
+    "skill obsolescence", "スキルの陳腐化",
 ]
