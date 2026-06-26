@@ -53,4 +53,15 @@ INTEREST_KEYWORDS = [
     "epistemic",
     "disruptive", "破壊的変化",
     "skill obsolescence", "スキルの陳腐化",
+
+    # --- 研究会①⑤：AIエージェントセキュリティ
+    "AIエージェント脆弱性", "プロンプト注入", "エージェントセキュリティ",
+    "AIコード自動生成リスク", "マルチエージェントシステムセキュリティ",
+    "AIエージェント攻撃", "エージェント間通信リスク",
+    "AIシステム乗っ取り", "ジェイルブレイク",
+    "agentic AI security", "prompt injection agent",
+    "multi-agent system vulnerability", "AI agent hijacking",
+    "agentic AI risk enterprise", "code generation security risk",
+    "LLM agent attack", "autonomous agent governance risk",
+    "agent-to-agent manipulation",
 ]
