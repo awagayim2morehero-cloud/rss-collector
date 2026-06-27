@@ -1,0 +1,42 @@
+name: RSS Brief Builder
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Generate config.py from Secrets
+        run: |
+          {
+            echo "import os"
+            echo "from keywords import INTEREST_KEYWORDS"
+            echo ""
+            echo "EMAIL_ADDRESS     = os.environ.get('EMAIL_ADDRESS')"
+            echo "EMAIL_PASSWORD    = os.environ.get('EMAIL_PASSWORD')"
+            echo "EMAIL_TO          = os.environ.get('EMAIL_TO')"
+            echo "ANTHROPIC_API_KEY = os.environ.get('ANTHROPIC_API_KEY')"
+            echo "FEEDBACK_URL      = os.environ.get('FEEDBACK_URL', '')"
+          } > config.py
+
+      - name: Build research brief
+        run: python build_brief.py
+        env:
+          EMAIL_ADDRESS: ${{ secrets.EMAIL_ADDRESS }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
