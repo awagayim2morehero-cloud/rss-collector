@@ -337,6 +337,16 @@ FEEDS = [
         "url": gnews('AI 知識労働 OR プロフェッション OR 認知的労働 OR 人間固有 OR 判断 OR 創造性 変容', lang="ja"),
         "filter": False,
     },
+    {
+        # 第5回（人財・領域④）向け。2026/9/8 追加。
+        # McKinsey Insights の公式RSSは category="プロファーム" に既存だが、美容・小売・航空まで
+        # 含む広いフィードのため、研究会レポート（1フィード最大10件）にそのまま載せると埋まる。
+        # プロファーム側は日次ダイジェスト用に残し、人財・働き方に絞ったクエリを研究会側へ別途置く。
+        "name": "McKinsey 人財・働き方の変容",
+        "category": "研究会",
+        "url": gnews('McKinsey AI "future of work" OR "talent" OR "workforce" OR "reskilling" 2025 OR 2026'),
+        "filter": False,
+    },
 
     # --- Google News RSS（クエリで絞り込み済み）
     {
