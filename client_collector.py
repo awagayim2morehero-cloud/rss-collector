@@ -82,6 +82,8 @@ def build_sources(client):
         {"type": "gnews", "url": gnews(name, lang="en"), "label": f"{name}（Google News 英語）"},
         {"type": "gnews", "url": gnews(f"site:nikkei.com {name}", lang="ja"), "label": f"{name}（日経電子版）"},
         {"type": "gnews", "url": gnews(f"site:ft.com {name}", lang="en"), "label": f"{name}（Financial Times）"},
+        # 2026/10/19 幹事指示：NewsPicks（公式 RSS が無いため Google News の site: 検索。TDnet 転載は除外）
+        {"type": "gnews", "url": gnews(f"site:newspicks.com {name} -お知らせ", lang="ja"), "label": f"{name}（NewsPicks）"},
     ]
     if client.get("ir_rss"):
         sources.append({"type": "rss", "url": client["ir_rss"], "label": f"{name}（IR公式RSS）"})
